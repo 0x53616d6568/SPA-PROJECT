@@ -270,14 +270,24 @@
 @layer base {
   html { scroll-behavior: smooth; }
   body { font-family: var(--app-font-sans); }
-  html[lang='ar'] body { font-family: 'Cairo', var(--app-font-sans); }
-  html[lang='ar'] .serif { font-family: 'Noto Naskh Arabic', Georgia, serif; }
-  html[lang='ar'] .mono { font-family: 'Cairo', var(--app-font-sans); letter-spacing: normal; }
   ::selection { background: hsl(24 48% 78% / .55); color: hsl(164 22% 17%); }
 }
 
 .serif { font-family: var(--app-font-serif); }
 .mono { font-family: var(--app-font-mono); }
+/* Keep Arabic font rules unlayered and after the app's serif/mono classes so
+   those base classes cannot override Arabic-capable fonts in the cascade. */
+html[lang='ar'] body { font-family: 'Cairo', 'Noto Naskh Arabic', Arial, sans-serif; }
+html[lang='ar'] .serif { font-family: 'Noto Naskh Arabic', Cairo, Arial, serif; }
+html[lang='ar'] .mono { font-family: Cairo, 'Noto Naskh Arabic', Arial, sans-serif; letter-spacing: normal; }
+html[lang='ar'] input[type='email'],
+html[lang='ar'] input[type='tel'],
+html[lang='ar'] input[type='url'],
+html[lang='ar'] input[type='password'],
+html[lang='ar'] input[type='date'],
+html[lang='ar'] input[dir='ltr'],
+html[lang='ar'] [data-ltr='true'] { direction: ltr; text-align: left; }
+html[lang='ar'] table { text-align: right; }
 .page-enter { animation: page-enter .55s cubic-bezier(.2,.7,.2,1) both; }
 @keyframes page-enter { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
 .cl-cardBox { background: hsl(var(--card)); }
